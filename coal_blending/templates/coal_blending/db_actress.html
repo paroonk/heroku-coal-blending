@@ -1,0 +1,51 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'ekko-lightbox/css/ekko-lightbox.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'movies/css/db.css' %}">
+{% endblock %}
+
+{% block title %}Actress Database{% endblock %}
+{% block nav_item_db_actress %}active{% endblock %}
+
+{% block body %}
+<section class="content-header">
+    <div class="container-responsive d-flex justify-content-center">
+<!--        <h1 class="font-weight-bold">Database</h1>-->
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title font-weight-bold text-primary">Actress Database</h3>
+        </div>
+        <div class="card-body">
+            <table id="dbTable" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Actress Name</th>
+                    <th>Movie ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for actress in actress_list %}
+                <tr>
+                    <td width="150px">{{ actress.name }}{{ actress.actress.all }}</td>
+                    <td>{% for movie in actress.movie_set.all %}<a href="File:///{{ movie.video.all.0.path }}">{{ movie.movie_id }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'datatables/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'ekko-lightbox/js/ekko-lightbox.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'movies/js/db_actress.js' %}"></script>
+{% endblock %}

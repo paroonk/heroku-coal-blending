@@ -1,0 +1,66 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'ekko-lightbox/css/ekko-lightbox.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'movies/css/db.css' %}">
+<style>
+
+</style>
+{% endblock %}
+
+{% block title %}Movie Database{% endblock %}
+{% block nav_item_db_movie %}active{% endblock %}
+
+{% block body %}
+<section class="content-header">
+    <div class="container-responsive d-flex justify-content-center">
+<!--        <h1 class="font-weight-bold">Database</h1>-->
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title font-weight-bold text-primary">Movie Database</h3>
+        </div>
+        <div class="card-body">
+            <table id="dbTable" class="table table-bordered table-hover" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Movie ID</th>
+                    <th>Actress Name</th>
+                    <th>Video</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for movie in movie_list %}
+                <tr>
+                    <td>{{ movie.movie_id }}</td>
+                    <td>{% for actress in movie.actress.all %}{{ actress.name }}{% if not forloop.last %}, {% endif %}{% if forloop.counter|divisibleby:2 %}<br>{% endif %}{% endfor %}</td>
+                    <td>
+                        {% for video in movie.video.all %}
+                        <div class="gallery">
+                            <a href="{{ movie.cover.url }}" data-toggle="lightbox" data-max-width="1024" data-max-height="800">
+                                {% thumbnail movie.cover "100x67" crop='center' as im %}<img class="img-fluid" src="{{ im.url }}">{% endthumbnail %}
+                            </a>
+                            <div class="desc"><a href="File:///{{ video.path }}\{{ video.filename }}">{{ forloop.counter }}</a></div>
+                        </div>
+<!--                            {% if not forloop.last %}, {% endif %}{% if forloop.counter|divisibleby:3 %}<br>{% endif %}-->
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'ekko-lightbox/js/ekko-lightbox.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'movies/js/db_movie.js' %}"></script>
+{% endblock %}

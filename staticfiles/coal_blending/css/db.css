@@ -1,0 +1,15 @@
+div.gallery {
+    float: left;
+    width: 120px;
+    text-align: center;
+}
+
+div.desc {
+    text-align: center;
+}
+
+#dbTable td {
+    vertical-align: middle;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}

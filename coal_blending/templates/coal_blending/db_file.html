@@ -1,0 +1,52 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'ekko-lightbox/css/ekko-lightbox.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'movies/css/db.css' %}">
+{% endblock %}
+
+{% block title %}File Database{% endblock %}
+{% block nav_item_db_file %}active{% endblock %}
+
+{% block body %}
+<section class="content-header">
+    <div class="container-responsive d-flex justify-content-center">
+<!--        <h1 class="font-weight-bold">Database</h1>-->
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title font-weight-bold text-primary">File Database</h3>
+        </div>
+        <div class="card-body">
+            <table id="dbTable" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Root Path</th>
+                    <th>File Name</th>
+                    <th>File Size (MB)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for file in file_list %}
+                <tr>
+                    <td><a href="File:///{{ file.path }}">{{ file.path }}</a></td>
+                    <td><a href="File:///{{ file.path }}\{{ file.filename }}">{{ file.filename }}</a></td>
+                    <td>{{ file.size }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'ekko-lightbox/js/ekko-lightbox.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'movies/js/db_file.js' %}"></script>
+{% endblock %}
