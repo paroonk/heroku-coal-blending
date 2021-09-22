@@ -19,5 +19,6 @@ class DashboardView(generic.TemplateView):
         file_name = "http://stats.idre.ucla.edu/stat/data/binary.csv"
         df = pd.read_csv(file_name)
         
-        context['test'] = str(df.index)
+        context['df'] = df.to_html(classes='table')
+        
         return context
