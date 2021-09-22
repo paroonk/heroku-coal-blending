@@ -14,5 +14,5 @@ class DashboardView(generic.TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
-        
+        context['Test'] = 'Test123'
         return context
