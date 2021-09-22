@@ -14,5 +14,10 @@ class DashboardView(generic.TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
-        context['test'] = 'Test123'
+        
+        import pandas as pd
+        file_name = "http://stats.idre.ucla.edu/stat/data/binary.csv"
+        df = pd.read_csv(file_name)
+        
+        context['test'] = str(df.index)
         return context
