@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Install psql so that "python manage.py dbshell" works
-RUN apt-get update -qq && apt-get install -y postgresql-client
+RUN apt-get update -qq && apt-get install -y postgresql-client libpq-dev gcc && pip install psycopg2
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
