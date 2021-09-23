@@ -56,8 +56,6 @@ class DataInputView(generic.TemplateView):
         op_df.dropna(inplace=True)
         context['df5'] = op_df.to_html(table_id='Table5', classes='table table-bordered table-hover table-responsive')
         
-        https://raw.githubusercontent.com/paroonk/heroku-coal-blending/master/bonmin
-        
         from sys import executable
         import numpy as np
         import pandas as pd
@@ -93,7 +91,7 @@ class DataInputView(generic.TemplateView):
         m.obj = Objective(expr=sum(items[i]['benefit'] * m.x[i] for i in items), sense=maximize)
 
         #_____Solve Problem_____
-        solver = SolverFactory(executable='apopt.py')
+        solver = SolverFactory('https://raw.githubusercontent.com/paroonk/heroku-coal-blending/master/bonmin')
         results = solver.solve(m, tee=False)
         
         context['test'] = m.obj()
