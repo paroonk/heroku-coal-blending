@@ -2,8 +2,7 @@ name: coal-blending
 channels:
     - conda-forge
 dependencies:
-- python=3.6
-- anaconda
+- python
 - pip
 - pip:
   - dj-database-url
