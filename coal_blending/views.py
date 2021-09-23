@@ -55,5 +55,47 @@ class DataInputView(generic.TemplateView):
         op_df.set_index('Date', inplace=True)
         op_df.dropna(inplace=True)
         context['df5'] = op_df.to_html(table_id='Table5', classes='table table-bordered table-hover table-responsive')
+        
+        https://raw.githubusercontent.com/paroonk/heroku-coal-blending/master/bonmin
+        
+        from sys import executable
+        import numpy as np
+        import pandas as pd
+        from itertools import product
+        from pyomo.environ import *
+
+        pd.options.display.float_format = "{:,.2f}".format
+        pd.options.display.max_columns = None
+        pd.options.display.expand_frame_repr = False
+
+        items = {
+            'hammer':       {'weight': 5, 'benefit': 8},
+            'wrench':       {'weight': 7, 'benefit': 3},
+            'screwdriver':  {'weight': 4, 'benefit': 6},
+            'towel':        {'weight': 3, 'benefit': 11},
+        }
+        weight_max = 14
+
+        # ___Initialize model___
+        m = ConcreteModel()
+
+        # ______Constants_______
+
+
+        # ______Variables_______
+        m.x = Var(items, domain=Binary)
+
+        # ______Equations_______
+        m.cons = ConstraintList()
+        m.cons.add(sum(items[i]['weight'] * m.x[i] for i in items) <= weight_max)
+
+        # ______Objective_______
+        m.obj = Objective(expr=sum(items[i]['benefit'] * m.x[i] for i in items), sense=maximize)
+
+        #_____Solve Problem_____
+        solver = SolverFactory(executable='apopt.py')
+        results = solver.solve(m, tee=False)
+        
+        context['test'] = m.obj()
                 
         return context
