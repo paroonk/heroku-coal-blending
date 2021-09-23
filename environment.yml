@@ -1,7 +1,9 @@
-name: coal-blending
+name: coal-blending-env
 channels:
     - conda-forge
 dependencies:
 - python
 - anaconda
+- coinbonmin
 - pip
+- -r file:requirements.txt
