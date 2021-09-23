@@ -3,14 +3,5 @@ channels:
     - conda-forge
 dependencies:
 - python
+- anaconda
 - pip
-- pip:
-  - dj-database-url
-  - Django
-  - django-heroku
-  - oauth2client
-  - gspread
-  - gunicorn
-  - pandas
-  - psycopg2
-  - whitenoise
