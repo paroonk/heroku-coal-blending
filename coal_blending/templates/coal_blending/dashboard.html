@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}">
+<script type="text/javascript" src="{% static 'coal_blending/css/dashboard.css' %}"></script>
 {% endblock %}
 
 {% block title %}Dashboard{% endblock %}
@@ -10,15 +12,18 @@
 {% block body %}
 <section class="content-header">
     <div class="container-responsive d-flex justify-content-center">
-        <h1 class="font-weight-bold">Dashboard</h1>
+        <h1 class="font-weight-bold">Coal Blending</h1>
     </div>
 </section>
 <section class="content">
     <div class="container-fluid">
+        Link to coal_spec file: <a href={{ link }}>{{ link }}</a>
         {{ df|safe }}
     </div>
 </section>
 {% endblock %}
 
 {% block javascript %}
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'coal_blending/js/dashboard.js' %}"></script>
 {% endblock %}

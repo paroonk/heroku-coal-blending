@@ -1,17 +1,6 @@
 $(document).ready(function() {
-    $(document).on("click", '[data-toggle="lightbox"]', function(event) {
-        event.preventDefault();
-        $(this).ekkoLightbox();
+    $('#dbTable').DataTable({
+        paging: false,
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
     });
-
-    $('.filter-container').filterizr({
-        spinner: {
-            enabled: true,
-        }
-    });
-    $('.btn[data-filter]').on('click', function() {
-        $('.btn[data-filter]').removeClass('active');
-        $(this).addClass('active');
-    });
-
 });
