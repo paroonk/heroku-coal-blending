@@ -29,7 +29,7 @@
         </ul>
 
         <!-- SEARCH FORM -->
-        <form class="form-inline ml-auto mr-3 my-0" action="{% url 'coal_blending:dashboard' %}" method="get">
+        <form class="form-inline ml-auto mr-3 my-0" action="{% url 'coal_blending:data_input' %}" method="get">
             <div class="input-group input-group-sm">
                 <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search" value="{{ q }}">
                 <div class="input-group-append">
@@ -72,10 +72,10 @@
                 <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{% url 'coal_blending:dashboard' %}" class="nav-link {% block nav_item_dashboard %}{% endblock %}">
+                        <a href="{% url 'coal_blending:data_input' %}" class="nav-link {% block nav_item_data_input %}{% endblock %}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard
+                                Data Input
                             </p>
                         </a>
                     </li>

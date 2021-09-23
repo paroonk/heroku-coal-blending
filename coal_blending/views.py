@@ -6,14 +6,14 @@ from .models import *
 
 
 def redirect_home(request):
-    return redirect('coal_blending:dashboard')
+    return redirect('coal_blending:data_input')
 
 
-class DashboardView(generic.TemplateView):
-    template_name = 'coal_blending/dashboard.html'
+class DataInputView(generic.TemplateView):
+    template_name = 'coal_blending/data_input.html'
     
     def get_context_data(self, **kwargs):
-        context = super(DashboardView, self).get_context_data(**kwargs)
+        context = super(DataInputView, self).get_context_data(**kwargs)
 
         # use creds to create a google client to interact with the Google Drive API
         json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
