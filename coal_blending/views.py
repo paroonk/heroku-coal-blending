@@ -82,13 +82,9 @@ class DataInputView(generic.TemplateView):
         m.obj = Objective(expr=sum(items[i]['benefit'] * m.x[i] for i in items), sense=maximize)
 
         #_____Solve Problem_____
-        # solver = SolverFactory('bonmin.exe')
-        # results = solver.solve(m, tee=False)
+        solver = SolverFactory('bonmin')
+        results = solver.solve(m, tee=False)
         
-        # context['test'] = m.obj()
-        
-        from os import path
-        context['test'] = path.exists('bonmin')
-        context['test2'] = path.exists('bonmin.exe')
+        context['test'] = m.obj()
                 
         return context
