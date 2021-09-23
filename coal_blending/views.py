@@ -86,8 +86,9 @@ class DataInputView(generic.TemplateView):
         # results = solver.solve(m, tee=False)
         
         # context['test'] = m.obj()
-        import platform
-        context['test'] = platform.platform()
-        context['test2'] = platform.architecture()[0]
+        
+        from os import path
+        context['test'] = path.exists('bonmin')
+        context['test2'] = path.exists('bonmin.exe')
                 
         return context
