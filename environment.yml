@@ -1,8 +1,12 @@
 name: coal-blending-env
+channels:
+- conda-forge
+- defaults
 dependencies:
 - python
 - anaconda
 - coinbonmin
+- pip
 - pip:
   - asgiref==3.4.1
   - cachetools==4.2.2
