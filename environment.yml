@@ -1,0 +1,17 @@
+name: coal-blending
+channels:
+    - conda-forge
+dependencies:
+- python=3.6
+- anaconda
+- pip
+- pip:
+  - dj-database-url
+  - Django
+  - django-heroku
+  - oauth2client
+  - gspread
+  - gunicorn
+  - pandas
+  - psycopg2
+  - whitenoise
