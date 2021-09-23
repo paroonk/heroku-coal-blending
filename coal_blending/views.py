@@ -14,6 +14,9 @@ class DataInputView(generic.TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(DataInputView, self).get_context_data(**kwargs)
+        
+        url = 'https://docs.google.com/spreadsheets/d/1CfxOcwVLGeTAQLGysozopqI2oqZDC4MkrYyumZnIKHw/edit#gid=486638920'
+        context['link'] = url
 
         # use creds to create a google client to interact with the Google Drive API
         json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
@@ -24,13 +27,33 @@ class DataInputView(generic.TemplateView):
         client = gspread.authorize(creds)
 
         # Find a workbook by url
-        url = 'https://docs.google.com/spreadsheets/d/1CfxOcwVLGeTAQLGysozopqI2oqZDC4MkrYyumZnIKHw/edit#gid=486638920'
         sheet = client.open_by_url(url)
         worksheet = sheet.worksheet('Coal_Data')
-        df = pd.DataFrame(worksheet.get_all_records())
+        coal_df = pd.DataFrame(worksheet.get_all_records())
+        coal_df.set_index('Supplier', inplace=True)
+        coal_df = coal_df.astype('float')
+        context['df1'] = coal_df.to_html(table_id='Table1', classes='table table-bordered table-hover table-responsive')
         
-        context['df'] = df.to_html(table_id='dbTable', classes='table table-bordered table-hover table-responsive')
+        worksheet = sheet.worksheet('Limit_CFB12')
+        limit_cfb12_df = pd.DataFrame(worksheet.get_all_records())
+        limit_cfb12_df.dropna(inplace=True)
+        context['df2'] = limit_cfb12_df.to_html(table_id='Table2', classes='table table-bordered table-hover table-responsive')
         
-        context['link'] = url
+        worksheet = sheet.worksheet('Limit_CFB3')
+        limit_cfb3_df = pd.DataFrame(worksheet.get_all_records())
+        limit_cfb3_df.dropna(inplace=True)
+        context['df3'] = limit_cfb3_df.to_html(table_id='Table3', classes='table table-bordered table-hover table-responsive')
         
+        worksheet = sheet.worksheet('Shipment')
+        shipment_df = pd.DataFrame(worksheet.get_all_records())
+        shipment_df.set_index('Date', inplace=True)
+        shipment_df.dropna(inplace=True)
+        context['df4'] = shipment_df.to_html(table_id='Table4', classes='table table-bordered table-hover table-responsive')
+                
+        worksheet = sheet.worksheet('Operation')
+        op_df = pd.DataFrame(worksheet.get_all_records())
+        op_df.set_index('Date', inplace=True)
+        op_df.dropna(inplace=True)
+        context['df5'] = op_df.to_html(table_id='Table5', classes='table table-bordered table-hover table-responsive')
+                
         return context

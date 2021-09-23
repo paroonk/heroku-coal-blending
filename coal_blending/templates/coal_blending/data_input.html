@@ -3,6 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'coal_blending/css/data_input.css' %}">
 {% endblock %}
 
 {% block title %}Data Input{% endblock %}
@@ -16,8 +17,24 @@
 </section>
 <section class="content">
     <div class="container-fluid">
-        Link to coal_spec file: <a href={{ link }}>{{ link }}</a>
-        {{ df|safe }}
+        <br>
+        <div class="row">
+            Link to coal_spec file:&nbsp;<a href={{ link }}>{{ link }}</a>
+        </div>
+        <br>
+        <div class="row">
+            <div class='col'>{{ df1|safe }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class='col'>{{ df2|safe }}</div>
+            <div class='col'>{{ df3|safe }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class='col'>{{ df4|safe }}</div>
+            <div class='col'>{{ df5|safe }}</div>
+        </div>
     </div>
 </section>
 {% endblock %}
