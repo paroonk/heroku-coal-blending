@@ -4,6 +4,7 @@ from django.views import generic
 
 from .models import *
 
+from pyomo.environ import *
 
 def redirect_home(request):
     return redirect('coal_blending:data_input')
@@ -55,16 +56,6 @@ class DataInputView(generic.TemplateView):
         op_df.set_index('Date', inplace=True)
         op_df.dropna(inplace=True)
         context['df5'] = op_df.to_html(table_id='Table5', classes='table table-bordered table-hover table-responsive')
-        
-        from sys import executable
-        import numpy as np
-        import pandas as pd
-        from itertools import product
-        from pyomo.environ import *
-
-        pd.options.display.float_format = "{:,.2f}".format
-        pd.options.display.max_columns = None
-        pd.options.display.expand_frame_repr = False
 
         items = {
             'hammer':       {'weight': 5, 'benefit': 8},
