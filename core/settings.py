@@ -21,11 +21,10 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', config('SECRET_KEY'))
-
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', config('DEBUG'))
+DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -79,7 +78,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', config('DATABASE_URL')),
+        default=config('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True,
     )
