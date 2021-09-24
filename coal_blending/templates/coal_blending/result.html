@@ -1,0 +1,30 @@
+{% extends 'coal_blending/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'coal_blending/css/result.css' %}">
+{% endblock %}
+
+{% block title %}Optimization Result{% endblock %}
+{% block nav_item_result %}active{% endblock %}
+
+{% block body %}
+<section class="content-header">
+    <div class="container-responsive d-flex justify-content-center">
+        <h1 class="font-weight-bold">Optimization Result</h1>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            Link to result file:&nbsp;<a href={{ link }}>{{ link }}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+{% comment %} <script type="text/javascript" src="{% static 'coal_blending/js/result.js' %}"></script> {% endcomment %}
+{% endblock %}

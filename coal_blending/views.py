@@ -1,13 +1,11 @@
-import json
 
-import gspread
-from decouple import config
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views import generic
-from pyomo.environ import *
+
 
 from .models import *
+from .optimize import *
 
 
 def redirect_home(request):
@@ -20,7 +18,7 @@ class DataInputView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DataInputView, self).get_context_data(**kwargs)
         
-        url = 'https://docs.google.com/spreadsheets/d/1CfxOcwVLGeTAQLGysozopqI2oqZDC4MkrYyumZnIKHw/edit#gid=486638920'
+        url = 'https://docs.google.com/spreadsheets/d/1rflUWAGZd0vlKGxEGR_kn7LuVmegOQiL8c35Nzh6lmM/edit#gid=486638920'
         context['link'] = url
 
         # use creds to create a google client to interact with the Google Drive API
@@ -60,35 +58,30 @@ class DataInputView(generic.TemplateView):
         op_df.set_index('Date', inplace=True)
         op_df.dropna(inplace=True)
         context['df5'] = op_df.to_html(table_id='Table5', classes='table table-bordered table-hover table-responsive')
-
-        items = {
-            'hammer':       {'weight': 5, 'benefit': 8},
-            'wrench':       {'weight': 7, 'benefit': 3},
-            'screwdriver':  {'weight': 4, 'benefit': 6},
-            'towel':        {'weight': 3, 'benefit': 11},
-        }
-        weight_max = 14
-
-        # ___Initialize model___
-        m = ConcreteModel()
-
-        # ______Constants_______
+                
+        return context
 
 
-        # ______Variables_______
-        m.x = Var(items, domain=Binary)
-
-        # ______Equations_______
-        m.cons = ConstraintList()
-        m.cons.add(sum(items[i]['weight'] * m.x[i] for i in items) <= weight_max)
-
-        # ______Objective_______
-        m.obj = Objective(expr=sum(items[i]['benefit'] * m.x[i] for i in items), sense=maximize)
-
-        #_____Solve Problem_____
-        solver = SolverFactory('bonmin')
-        results = solver.solve(m, tee=False)
+class ResultView(generic.TemplateView):
+    template_name = 'coal_blending/result.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(ResultView, self).get_context_data(**kwargs)
         
-        context['test'] = m.obj()
+        url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
+        context['link'] = url
+        
+        # use creds to create a google client to interact with the Google Drive API
+        json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
+        creds_dict = json.loads(json_creds)
+        creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
+        scopes = ['https://spreadsheets.google.com/feeds'] 
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
+        client = gspread.authorize(creds)
+        
+        # Find a workbook by url
+        sheet = client.open_by_url(url)
+        worksheet = sheet.worksheet('Updated')
+        worksheet.update('A1', str(datetime.now()))
                 
         return context
