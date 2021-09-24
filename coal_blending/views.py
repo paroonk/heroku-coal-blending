@@ -85,7 +85,6 @@ class DataInputView(generic.TemplateView):
         solver = SolverFactory('bonmin', executable='/app/bonmin')
         results = solver.solve(m, tee=False)
         
-        import os
-        context['test'] = os.getcwd()
+        context['test'] = m.obj()
                 
         return context
