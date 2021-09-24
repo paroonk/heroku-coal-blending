@@ -1,4 +1,5 @@
 import json
+import os
 
 import gspread
 from decouple import config
@@ -24,7 +25,7 @@ class DataInputView(generic.TemplateView):
         context['link'] = url
 
         # use creds to create a google client to interact with the Google Drive API
-        json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
+        json_creds = os.getenv('GOOGLE_APPLICATION_CREDENTIALS', config('GOOGLE_APPLICATION_CREDENTIALS'))
         creds_dict = json.loads(json_creds)
         creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
         scopes = ['https://spreadsheets.google.com/feeds'] 
