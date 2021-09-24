@@ -1,6 +1,7 @@
 import json
 
 import gspread
+from decouple import config
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views import generic
