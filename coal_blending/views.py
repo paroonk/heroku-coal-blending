@@ -1,8 +1,9 @@
 
+import time
+
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views import generic
-
 
 from .models import *
 from .optimize import *
@@ -70,6 +71,8 @@ class ResultView(generic.TemplateView):
         
         url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
         context['link'] = url
+        
+        time.sleep(30)
         
         # use creds to create a google client to interact with the Google Drive API
         json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
