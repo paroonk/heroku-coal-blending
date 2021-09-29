@@ -1,9 +1,6 @@
 build:
   docker:
     web: Dockerfile
-    redis:
-    image: redis:latest
-
 
 release:
   image: web
