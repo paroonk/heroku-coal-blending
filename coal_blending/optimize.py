@@ -254,11 +254,7 @@ def coal_optimize():
         m.obj = Objective(expr=sum(lime_cost[d] + flyash_cost[d] + bottomash_cost[d] + fe2o3_cost[d] + na2o_cost[d] + remain_penalty[d] for d in date_rng[1:]), sense=minimize)
 
         #_____Solve Problem_____
-        # solver = SolverFactory('glpk', executable='/usr/bin/glpsol')
-        # solver = SolverFactory('cbc', executable='/usr/bin/cbc')
-        # solver = SolverFactory('ipopt', executable='/content/ipopt')
-        solver = SolverFactory('bonmin', executable='/content/bonmin')
-        # solver = SolverFactory('couenne', executable='/content/couenne')
+        solver = SolverFactory('bonmin')
 
         result = solver.solve(m, tee=show_solver_log)
 
