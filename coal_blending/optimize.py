@@ -42,19 +42,22 @@ def coal_optimize():
     worksheet = sheet.worksheet('Coal_Data')
     coal_df = pd.DataFrame(worksheet.get_all_records())
     coal_df.set_index('Supplier', inplace=True)
-    coal_df = coal_df.astype('float')
+    coal_df = coal_df.apply(pd.to_numeric, errors='coerce')
 
     worksheet = sheet.worksheet('Limit_CFB12')
     limit_cfb12_df = pd.DataFrame(worksheet.get_all_records())
+    limit_cfb12_df = limit_cfb12_df.apply(lambda x: x.str.strip()).replace('', np.nan)
     limit_cfb12_df.dropna(inplace=True)
 
     worksheet = sheet.worksheet('Limit_CFB3')
     limit_cfb3_df = pd.DataFrame(worksheet.get_all_records())
+    limit_cfb3_df = limit_cfb3_df.apply(lambda x: x.str.strip()).replace('', np.nan)
     limit_cfb3_df.dropna(inplace=True)
 
     worksheet = sheet.worksheet('Shipment')
     shipment_df = pd.DataFrame(worksheet.get_all_records())
     shipment_df.set_index('Date', inplace=True)
+    shipment_df = shipment_df.apply(pd.to_numeric, errors='coerce').fillna(0)
     shipment_df.dropna(inplace=True)
             
     worksheet = sheet.worksheet('Operation')

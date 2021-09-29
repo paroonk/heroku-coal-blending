@@ -41,7 +41,7 @@ def coal_optimize():
     worksheet = sheet.worksheet('Coal_Data')
     coal_df = pd.DataFrame(worksheet.get_all_records())
     coal_df.set_index('Supplier', inplace=True)
-    coal_df = coal_df.astype('float')
+    coal_df = coal_df.apply(pd.to_numeric, errors='coerce')
 
     worksheet = sheet.worksheet('Limit_CFB12')
     limit_cfb12_df = pd.DataFrame(worksheet.get_all_records())
