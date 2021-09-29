@@ -1,2 +1,2 @@
 # pull official base image
-FROM redis:latest
+FROM redis
