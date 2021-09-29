@@ -61,6 +61,6 @@ class ResultView(generic.TemplateView):
         url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
         context['link'] = url
         
-        django_rq.enqueue(test)
+        coal_optimize.delay()
                 
         return context
