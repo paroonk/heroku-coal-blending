@@ -11,17 +11,21 @@ import pandas as pd
 from decouple import config
 from oauth2client.service_account import ServiceAccountCredentials
 from pyomo.environ import *
+from pyomo.opt import results
 from tqdm import tqdm
 
-# # _______Import______
+input_url = 'https://docs.google.com/spreadsheets/d/1rflUWAGZd0vlKGxEGR_kn7LuVmegOQiL8c35Nzh6lmM/edit#gid=486638920'
+result_url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
 
-# # use creds to create a google client to interact with the Google Drive API
-# json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
-# creds_dict = json.loads(json_creds)
-# creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
-# scopes = ['https://spreadsheets.google.com/feeds'] 
-# creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
-# client = gspread.authorize(creds)
+# use creds to create a google client to interact with the Google Drive API
+json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
+creds_dict = json.loads(json_creds)
+creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
+scopes = ['https://spreadsheets.google.com/feeds'] 
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
+client = gspread.authorize(creds)
+
+# _______Import______
 
 # # Find a workbook by url
 # url = 'https://docs.google.com/spreadsheets/d/1rflUWAGZd0vlKGxEGR_kn7LuVmegOQiL8c35Nzh6lmM/edit#gid=486638920'
@@ -531,24 +535,31 @@ from tqdm import tqdm
 # result_df_daily.to_excel('result.xlsx', sheet_name='Result')
 
 def test():
-    url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
-    
-    # use creds to create a google client to interact with the Google Drive API
-    json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
-    creds_dict = json.loads(json_creds)
-    creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
-    scopes = ['https://spreadsheets.google.com/feeds'] 
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
-    client = gspread.authorize(creds)
+    url = result_url
 
     # Find a workbook by url
     sheet = client.open_by_url(url)
-    worksheet = sheet.worksheet('Updated')
+    worksheet = sheet.worksheet('Status')
     worksheet.update('A1', str(datetime.now()))
     
     time.sleep(30)
     
     # Find a workbook by url
     sheet = client.open_by_url(url)
-    worksheet = sheet.worksheet('Updated')
+    worksheet = sheet.worksheet('Status')
+    worksheet.update('A2', str(datetime.now()))
+
+def get_result_status():
+    url = result_url
+
+    # Find a workbook by url
+    sheet = client.open_by_url(url)
+    worksheet = sheet.worksheet('Status')
+    worksheet.update('A1', str(datetime.now()))
+    
+    time.sleep(30)
+    
+    # Find a workbook by url
+    sheet = client.open_by_url(url)
+    worksheet = sheet.worksheet('Status')
     worksheet.update('A2', str(datetime.now()))

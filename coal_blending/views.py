@@ -16,16 +16,8 @@ class DataInputView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DataInputView, self).get_context_data(**kwargs)
         
-        url = 'https://docs.google.com/spreadsheets/d/1rflUWAGZd0vlKGxEGR_kn7LuVmegOQiL8c35Nzh6lmM/edit#gid=486638920'
+        url = input_url
         context['link'] = url
-
-        # use creds to create a google client to interact with the Google Drive API
-        json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
-        creds_dict = json.loads(json_creds)
-        creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
-        scopes = ['https://spreadsheets.google.com/feeds'] 
-        creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
-        client = gspread.authorize(creds)
 
         # Find a workbook by url
         sheet = client.open_by_url(url)
