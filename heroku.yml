@@ -1,9 +1,6 @@
 build:
   docker:
     web: Dockerfile
-    config:
-      DEBUG: 0
-      SECRET_KEY: 'django-insecure-5ytg@z!j9yuh(o96=483-=(v$t2&*xs5&vh9qcv8!4uksn!$!9'
 
 release:
   image: web
