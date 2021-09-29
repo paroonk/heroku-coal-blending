@@ -140,10 +140,21 @@ USE_THOUSAND_SEPARATOR = True
 # Add-on Package Setting
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4-responsive.html'
 
+# Configure Django-Redis
+CACHES = {
+    'redis-cache': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': config('REDIS_URL'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
 # Configure Django-RQ
 RQ_QUEUES = {
     'default': {
-        'URL': config('REDIS_URL'),
+        'USE_REDIS_CACHE': 'redis-cache',
         'DEFAULT_TIMEOUT': 360,
     },
 }
