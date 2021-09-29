@@ -1,6 +1,3 @@
-
-import time
-
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views import generic
@@ -72,19 +69,17 @@ class ResultView(generic.TemplateView):
         url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
         context['link'] = url
         
-        time.sleep(30)
+        # # use creds to create a google client to interact with the Google Drive API
+        # json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
+        # creds_dict = json.loads(json_creds)
+        # creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
+        # scopes = ['https://spreadsheets.google.com/feeds'] 
+        # creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
+        # client = gspread.authorize(creds)
         
-        # use creds to create a google client to interact with the Google Drive API
-        json_creds = config('GOOGLE_APPLICATION_CREDENTIALS')
-        creds_dict = json.loads(json_creds)
-        creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
-        scopes = ['https://spreadsheets.google.com/feeds'] 
-        creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
-        client = gspread.authorize(creds)
-        
-        # Find a workbook by url
-        sheet = client.open_by_url(url)
-        worksheet = sheet.worksheet('Updated')
-        worksheet.update('A1', str(datetime.now()))
+        # # Find a workbook by url
+        # sheet = client.open_by_url(url)
+        # worksheet = sheet.worksheet('Updated')
+        # worksheet.update('A1', str(datetime.now()))
                 
         return context
