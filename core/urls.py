@@ -25,5 +25,6 @@ urlpatterns = [
 urlpatterns = [
     path('', include('coal_blending.urls')),
     path('admin/', admin.site.urls),
+    path('django-rq/', include('django_rq.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
