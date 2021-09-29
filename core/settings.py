@@ -142,7 +142,7 @@ DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4-responsive.html'
 
 # Configure Django-Redis
 CACHES = {
-    'redis-cache': {
+    'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': config('REDIS_URL'),
         'OPTIONS': {
@@ -154,8 +154,7 @@ CACHES = {
 # Configure Django-RQ
 RQ_QUEUES = {
     'default': {
-        'USE_REDIS_CACHE': 'redis-cache',
-        'DEFAULT_TIMEOUT': 360,
+        'USE_REDIS_CACHE': 'default',
     },
 }
 RQ_SHOW_ADMIN_LINK = True
