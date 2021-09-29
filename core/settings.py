@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*.herokuapp.com']
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_rq',
     'coal_blending',
 ]
 
@@ -138,6 +139,15 @@ USE_THOUSAND_SEPARATOR = True
 
 # Add-on Package Setting
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4-responsive.html'
+
+# Configure Django-RQ
+RQ_QUEUES = {
+    'default': {
+        'URL': config('REDIS_URL'),
+        'DEFAULT_TIMEOUT': 360,
+    },
+}
+RQ_SHOW_ADMIN_LINK = True
 
 # Heroku Setting
 django_heroku.settings(locals())
