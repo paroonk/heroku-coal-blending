@@ -548,7 +548,7 @@ def coal_optimize():
         worksheet.clear()
         df_export = result_df_daily.copy()
         df_export = df_export.reset_index().fillna(0)
-        df_export['Date'] = df_export['Date'].map(lambda dt: dt.strftime(f"%Y-%m-%d %H:%M:%S"))
+        df_export['Date'] = df_export['Date'].map(lambda dt: dt.strftime(f"%Y-%m-%d"))
         worksheet.update([df_export.columns.values.tolist()] + df_export.values.tolist())
             
     # Export result data
@@ -558,5 +558,5 @@ def coal_optimize():
     # worksheet.clear()
     # df_export = result_df_daily.copy()
     # df_export = df_export.reset_index().fillna(0)
-    # df_export['Date'] = df_export['Date'].map(lambda dt: dt.strftime(f"%Y-%m-%d %H:%M:%S"))
+    # df_export['Date'] = df_export['Date'].map(lambda dt: dt.strftime(f"%Y-%m-%d"))
     # worksheet.update([df_export.columns.values.tolist()] + df_export.values.tolist())
