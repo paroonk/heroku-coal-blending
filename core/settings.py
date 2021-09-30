@@ -155,7 +155,7 @@ CACHES = {
 RQ_QUEUES = {
     'default': {
         'USE_REDIS_CACHE': 'default',
-        
+
     },
 }
 RQ_SHOW_ADMIN_LINK = True

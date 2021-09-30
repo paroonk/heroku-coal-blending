@@ -35,7 +35,7 @@ scopes = ['https://spreadsheets.google.com/feeds']
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scopes)
 client = gspread.authorize(creds)
 
-@job('default', timeout=3600)
+@job('default', timeout=10800)
 def coal_optimize():
     # _______Import______
 
