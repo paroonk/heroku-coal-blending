@@ -15,6 +15,10 @@ from pyomo.environ import *
 from pyomo.opt import results
 from tqdm import tqdm
 
+pd.options.display.float_format = "{:,.2f}".format
+pd.options.display.max_columns = None
+pd.options.display.expand_frame_repr = False
+
 input_url = 'https://docs.google.com/spreadsheets/d/1rflUWAGZd0vlKGxEGR_kn7LuVmegOQiL8c35Nzh6lmM/edit#gid=486638920'
 result_url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
 Start_Date = '2019-12-31'
@@ -253,11 +257,7 @@ def coal_optimize():
         m.obj = Objective(expr=sum(lime_cost[d] + flyash_cost[d] + bottomash_cost[d] + fe2o3_cost[d] + na2o_cost[d] + remain_penalty[d] for d in date_rng[1:]), sense=minimize)
 
         #_____Solve Problem_____
-        # solver = SolverFactory('glpk', executable='/usr/bin/glpsol')
-        # solver = SolverFactory('cbc', executable='/usr/bin/cbc')
-        # solver = SolverFactory('ipopt', executable='/content/ipopt')
-        solver = SolverFactory('bonmin', executable='/content/bonmin')
-        # solver = SolverFactory('couenne', executable='/content/couenne')
+        solver = SolverFactory('bonmin')
 
         result = solver.solve(m, tee=show_solver_log)
 
@@ -512,7 +512,6 @@ def coal_optimize():
         sheet = client.open_by_url(url)
         worksheet = sheet.worksheet('Result')
         worksheet.update('A1', f"Iter {i + 1}/{n_sim + 1}")
-        print(f"Iter {i + 1}/{n_sim + 1}")
 
         if i <= n_sim:
             # Extract part of df for only simalation duration and simulate

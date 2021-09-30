@@ -15,6 +15,10 @@ from pyomo.environ import *
 from pyomo.opt import results
 from tqdm import tqdm
 
+pd.options.display.float_format = "{:,.2f}".format
+pd.options.display.max_columns = None
+pd.options.display.expand_frame_repr = False
+
 input_url = 'https://docs.google.com/spreadsheets/d/1rflUWAGZd0vlKGxEGR_kn7LuVmegOQiL8c35Nzh6lmM/edit#gid=486638920'
 result_url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
 Start_Date = '2019-12-31'
@@ -508,7 +512,7 @@ def coal_optimize():
         # Find a workbook by url
         sheet = client.open_by_url(url)
         worksheet = sheet.worksheet('Result')
-        worksheet.update('A1', f"Iter {i + 1}/{n_sim + 1}")     # print(f"Iter {i + 1}/{n_sim + 1}")
+        worksheet.update('A1', f"Iter {i + 1}/{n_sim + 1}")
 
         if i <= n_sim:
             # Extract part of df for only simalation duration and simulate
@@ -539,19 +543,3 @@ def coal_optimize():
             
     # Export result data
     # result_df_daily.to_excel('result.xlsx', sheet_name='Result')
-
-@job('default', timeout=3600)
-def test():
-    url = result_url
-
-    # Find a workbook by url
-    sheet = client.open_by_url(url)
-    worksheet = sheet.worksheet('Status')
-    worksheet.update('A1', str(datetime.now()))
-    
-    time.sleep(30)
-    
-    # Find a workbook by url
-    sheet = client.open_by_url(url)
-    worksheet = sheet.worksheet('Status')
-    worksheet.update('A2', str(datetime.now()))

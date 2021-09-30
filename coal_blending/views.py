@@ -52,6 +52,11 @@ class DataInputView(generic.TemplateView):
         return context
 
 
+def trigger_optimizer(request):
+    coal_optimize.delay()
+    
+    return redirect(request.META.get('HTTP_REFERER'))
+
 class ResultView(generic.TemplateView):
     template_name = 'coal_blending/result.html'
     
@@ -60,7 +65,5 @@ class ResultView(generic.TemplateView):
         
         url = 'https://docs.google.com/spreadsheets/d/1N2EiCGQMSnxOmzuFyE6cnwrLoBTLdrjF-h7l2cUpAo0/edit#gid=979337795'
         context['link'] = url
-        
-        coal_optimize.delay()
                 
         return context

@@ -20,6 +20,9 @@
         <div class="row">
             Link to result file:&nbsp;<a href={{ link }}>{{ link }}</a>
         </div>
+        <div class="row">
+            <a class="btn btn-primary" href="{% url 'coal_blending:trigger_optimizer' %}" role="button">Run Optimize</a>
+        </div>
     </div>
 </section>
 {% endblock %}
