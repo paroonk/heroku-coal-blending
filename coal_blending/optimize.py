@@ -543,9 +543,14 @@ def coal_optimize():
             result_df_daily = result_df_daily.append(result_daily.tail(Sim_Week_Inc_Step * 7))
             result_df_week = result_df_week.append(result_week.tail(Sim_Week_Inc_Step))
             
+        sheet = client.open_by_url(url)
+        worksheet = sheet.worksheet('Result')
+        worksheet.clear()
+        worksheet.update([result_df_daily.columns.values.tolist()] + result_df_daily.values.tolist())
+            
     # Export result data
     # result_df_daily.to_excel('result.xlsx', sheet_name='Result')
-    sheet = client.open_by_url(url)
-    worksheet = sheet.worksheet('Result')
-    worksheet.clear()
-    worksheet.update([result_df_daily.columns.values.tolist()] + result_df_daily.values.tolist())
+    # sheet = client.open_by_url(url)
+    # worksheet = sheet.worksheet('Result')
+    # worksheet.clear()
+    # worksheet.update([result_df_daily.columns.values.tolist()] + result_df_daily.values.tolist())
