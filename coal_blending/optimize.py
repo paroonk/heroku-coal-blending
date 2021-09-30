@@ -511,8 +511,10 @@ def coal_optimize():
 
         # Find a workbook by url
         sheet = client.open_by_url(url)
-        worksheet = sheet.worksheet('Result')
-        worksheet.update('A1', f"Iter {i + 1}/{n_sim + 1}")
+        worksheet = sheet.worksheet('Status')
+        worksheet.update(f"A{i + 1}", f"Iter {i + 1}/{n_sim + 1}")
+        worksheet.update(f"B{i + 1}", datetime.now().strftime(f"%Y-%m-%d"))
+        worksheet.update(f"C{i + 1}", datetime.now().strftime(f"%H:%M:%S"))
 
         if i <= n_sim:
             # Extract part of df for only simalation duration and simulate
@@ -543,3 +545,7 @@ def coal_optimize():
             
     # Export result data
     # result_df_daily.to_excel('result.xlsx', sheet_name='Result')
+    sheet = client.open_by_url(url)
+    worksheet = sheet.worksheet('Result')
+    worksheet.clear()
+    worksheet.update([result_df_daily.columns.values.tolist()] + result_df_daily.values.tolist())
