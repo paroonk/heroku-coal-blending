@@ -138,8 +138,8 @@ def coal_optimize():
         m.remain = Var(date_rng, supplier, domain=NonNegativeReals)
         m.remain_notzero = Var(date_rng[1:], supplier, domain=Binary)
 
-        m.cfb12_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step))
-        m.cfb3_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step))
+        m.cfb12_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step), initialize=0.1)
+        m.cfb3_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step), initialize=0.1)
         m.cfb12_select = Var(date_rng[1:], supplier, domain=Binary)
         m.cfb3_select = Var(date_rng[1:], supplier, domain=Binary)
         m.cfb12_use = Var(date_rng[1:], supplier, domain=NonNegativeReals)
