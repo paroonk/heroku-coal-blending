@@ -366,7 +366,7 @@ def coal_optimize():
                         ratio[d][n_supplier[0][0]] = q + (0 if (13 - i) >= idx else 1)
                         ratio[d][n_supplier[1][0]] = n_ratio_step - ratio[d][n_supplier[0][0]]
 
-            # week 1 and week 2 have diffrence ratio
+            # week 1 and week 2 have different ratio
             else:
                 for i in range(Sim_Week_Inc_Step):
                     n_supplier = [(s, ratio_avg[i][supplier.index(s)]) for s in supplier if ratio_avg[i][supplier.index(s)] > 0]
@@ -513,8 +513,7 @@ def coal_optimize():
         sheet = client.open_by_url(url)
         worksheet = sheet.worksheet('Status')
         worksheet.update(f"A{i + 1}", f"Iter {i + 1}/{n_sim + 1}")
-        worksheet.update(f"B{i + 1}", datetime.now().strftime(f"%Y-%m-%d"))
-        worksheet.update(f"C{i + 1}", datetime.now().strftime(f"%H:%M:%S"))
+        worksheet.update(f"B{i + 1}", datetime.now().strftime(f"%Y-%m-%d %H:%M:%S"))
 
         if i <= n_sim:
             # Extract part of df for only simalation duration and simulate
@@ -548,15 +547,8 @@ def coal_optimize():
         worksheet.clear()
         df_export = result_df_daily.copy()
         df_export = df_export.reset_index().fillna(0)
-        df_export['Date'] = df_export['Date'].map(lambda dt: dt.strftime(f"%Y-%m-%d"))
+        df_export['Date'] = df_export['Date'].map(lambda dt: dt.strftime(f"%Y-%m-%d %H:%M:%S"))
         worksheet.update([df_export.columns.values.tolist()] + df_export.values.tolist())
             
     # Export result data
     # result_df_daily.to_excel('result.xlsx', sheet_name='Result')
-    # sheet = client.open_by_url(url)
-    # worksheet = sheet.worksheet('Result')
-    # worksheet.clear()
-    # df_export = result_df_daily.copy()
-    # df_export = df_export.reset_index().fillna(0)
-    # df_export['Date'] = df_export['Date'].map(lambda dt: dt.strftime(f"%Y-%m-%d"))
-    # worksheet.update([df_export.columns.values.tolist()] + df_export.values.tolist())

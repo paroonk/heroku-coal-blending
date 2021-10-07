@@ -137,8 +137,8 @@ def coal_optimize():
         m.remain = Var(date_rng, supplier, domain=NonNegativeReals)
         m.remain_notzero = Var(date_rng[1:], supplier, domain=Binary)
 
-        m.cfb12_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step))
-        m.cfb3_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step))
+        m.cfb12_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step), initialize=0.1)
+        m.cfb3_ratio = Var(date_rng[1:], supplier, domain=NonNegativeReals, bounds=(0, n_ratio_step), initialize=0.1)
         m.cfb12_select = Var(date_rng[1:], supplier, domain=Binary)
         m.cfb3_select = Var(date_rng[1:], supplier, domain=Binary)
         m.cfb12_use = Var(date_rng[1:], supplier, domain=NonNegativeReals)
@@ -365,7 +365,7 @@ def coal_optimize():
                         ratio[d][n_supplier[0][0]] = q + (0 if (13 - i) >= idx else 1)
                         ratio[d][n_supplier[1][0]] = n_ratio_step - ratio[d][n_supplier[0][0]]
 
-            # week 1 and week 2 have diffrence ratio
+            # week 1 and week 2 have different ratio
             else:
                 for i in range(Sim_Week_Inc_Step):
                     n_supplier = [(s, ratio_avg[i][supplier.index(s)]) for s in supplier if ratio_avg[i][supplier.index(s)] > 0]
