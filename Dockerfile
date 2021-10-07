@@ -20,4 +20,4 @@ RUN wget http://ampl.com/dl/open/bonmin/bonmin-linux64.zip; unzip bonmin-linux64
 
 # copy project
 COPY . /app/
-RUN mv /app/.env_docker /app/.env
+RUN mv /app/.env_heroku /app/.env

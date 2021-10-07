@@ -271,7 +271,7 @@ def coal_optimize():
 
         # _____Solve Problem_____
         solver = SolverFactory('bonmin')
-
+        solver.options['timelimit'] = 5
         result = solver.solve(m, tee=show_solver_log)
 
         # _______Results________
